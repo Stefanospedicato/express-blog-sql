@@ -31,10 +31,22 @@ const modify = (req, res) => {
   res.send(`Modifica del post con ${id}`);
 }
 
+const destroy = (req,res) => {
+  const id = req.params.id
+
+  const sql = 'DELETE FROM posts WHERE id=?'
+
+  connection.query(sql, [id], (err) => {
+    if(err) return res.status(500).json({ error: 'Connessione al database fallita' });
+    res.sendStatus(204)
+  })
+}
+
 module.exports = {
   index,
   show,
   store,
   update,
-  modify
+  modify,
+  destroy
 }
