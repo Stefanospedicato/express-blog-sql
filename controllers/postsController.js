@@ -12,11 +12,20 @@ const index = (req,res) => {
 
 const show = (req, res) => {
   
-  const id = req.params.id
+  const id = req.params.id;
 
-  const sqlPost = 'SELECT * FROM posts WHERE id=?'
+  const sqlPost = 'SELECT * FROM posts WHERE id=?';
 
-}
+  connection.query(sqlPost, [id], (err, results) => {
+    if (err) return res.status(500).json({ error: 'Connessione al database fallita' })
+    if (results.length === 0) return res.status(404).json({err:'Post non trovato'})
+    const post = results[0]
+    res.json(post);
+  });
+};
+
+module.exports = { show };
+
 
 const store = (req, res) => {
   res.send('Creazione post');
