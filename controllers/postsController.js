@@ -15,12 +15,21 @@ const show = (req, res) => {
   const id = req.params.id;
 
   const sqlPost = 'SELECT * FROM posts WHERE id=?';
+  const sqlTags = 'SELECT T.* FROM tags T JOIN post_tag PT ON PT.tag_id = T.id WHERE PT.post_id=?';
 
   connection.query(sqlPost, [id], (err, results) => {
-    if (err) return res.status(500).json({ error: 'Connessione al database fallita' })
-    if (results.length === 0) return res.status(404).json({err:'Post non trovato'})
-    const post = results[0]
-    res.json(post);
+    if (err) return res.status(500).json({ error: 'Connessione al database fallita' });
+    if (results.length === 0) return res.status(404).json({ err: 'Post non trovato' });
+
+    let post = results[0];
+
+    connection.query(sqlTags, [id], (err, tagsResult) => {
+      if (err) return res.status(500).json({ error: 'Connessione al database fallita' });
+      
+      post.tags = tagsResult;
+      
+      res.json(post);
+    });
   });
 };
 
