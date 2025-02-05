@@ -33,9 +33,6 @@ const show = (req, res) => {
   });
 };
 
-module.exports = { show };
-
-
 const store = (req, res) => {
   res.send('Creazione post');
 }
