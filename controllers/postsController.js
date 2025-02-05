@@ -13,6 +13,9 @@ const index = (req,res) => {
 const show = (req, res) => {
   
   const id = req.params.id
+
+  const sqlPost = 'SELECT * FROM posts WHERE id=?'
+
 }
 
 const store = (req, res) => {

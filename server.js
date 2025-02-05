@@ -14,7 +14,7 @@ app.get('/', (req,res) => {
   res.send('Server POSTS')
 })
 
-app.use('./posts', postsRouter)
+app.use('/posts', postsRouter)
 
 app.use(showError)
 
